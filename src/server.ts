@@ -1,10 +1,29 @@
 import logger from "@utils/logger";
-import ErrorHandler from "@utils/errors/errorHandler";
+import { ErrorHandler } from "@utils/errors";
+import { appConfig } from "@utils/appConfig";
+import runLoaders from "@loaders/index";
+import app from "./app";
 
-logger.info("Hello World!");
+(async () => {
+  await runLoaders(app);
+  // logger.info("Connecting to database...");
+  // await database.verifyConnection();
+  // logger.info("Connected to database.");
+})();
+
+const server = app.listen(appConfig.express.serverPort, () => {
+  logger.info(
+    { port: appConfig.express.serverPort },
+    "Listening on port %s...",
+    appConfig.express.serverPort,
+  );
+});
 
 const gracefulShutdown = (cause: string) => {
-  logger.info({ cause }, "Closing HTTP server due to %s.");
+  logger.info({ cause }, "Closing HTTP server due to %s.", cause);
+  server.close(() => {
+    logger.info("HTTP server closed.");
+  });
 };
 
 process.on("uncaughtException", (err) => {
