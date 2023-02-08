@@ -1,3 +1,4 @@
+import database from "@components/database";
 import logger from "@utils/logger";
 import { ErrorHandler } from "@utils/errors";
 import { appConfig } from "@utils/appConfig";
@@ -6,9 +7,9 @@ import app from "./app";
 
 (async () => {
   await runLoaders(app);
-  // logger.info("Connecting to database...");
-  // await database.verifyConnection();
-  // logger.info("Connected to database.");
+  logger.info("Connecting to database...");
+  await database.verifyConnection();
+  logger.info("Connected to database.");
 })();
 
 const server = app.listen(appConfig.express.serverPort, () => {
@@ -24,6 +25,14 @@ const gracefulShutdown = (cause: string) => {
   server.close(() => {
     logger.info("HTTP server closed.");
   });
+
+  logger.info("Closing the database connection...");
+  try {
+    database.disconnect();
+    logger.info("Database connection closed.");
+  } catch (err) {
+    logger.error(err);
+  }
 };
 
 process.on("uncaughtException", (err) => {
