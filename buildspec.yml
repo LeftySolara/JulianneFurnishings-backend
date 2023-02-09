@@ -6,10 +6,11 @@ phases:
       nodejs: latest
     commands:
       - npm install -g typescript
+        npm install -g tsc-alias
       - npm install
   build:
     commands:
-      - tsc
+      - tsc && tsc-alias
 
 artifacts:
   files:
