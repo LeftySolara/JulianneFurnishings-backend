@@ -1,4 +1,4 @@
-import database from "@components/database";
+import database from "@components/database/database";
 import logger from "@utils/logger";
 import { ErrorHandler } from "@utils/errors";
 import { appConfig } from "@utils/appConfig";
