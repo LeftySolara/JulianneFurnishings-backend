@@ -33,7 +33,7 @@ if (
 
 const appConfig: IAppConfig = {
   express: {
-    serverPort: process.env.SERVER_PORT,
+    serverPort: process.env.PORT,
     corsOrigin: process.env.CORS_ORIGIN,
   },
   logger: {

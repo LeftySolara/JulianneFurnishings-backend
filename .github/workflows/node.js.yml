@@ -10,7 +10,7 @@ on:
     branches: ["master"]
 
 env:
-  SERVER_PORT: 5000
+  PORT: 5000
   CORS_ORIGIN: 127.0.0.1
   LOG_LEVEL: "debug"
   LOG_LOCATION: "./test.log"
