@@ -3,6 +3,7 @@ dist/
 logs/
 coverage/
 
+.env
 *.env.*
 
 # Elastic Beanstalk Files
