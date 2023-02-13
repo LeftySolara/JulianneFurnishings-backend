@@ -2,10 +2,15 @@
   "name": "juliannefurnishings",
   "version": "0.0.1",
   "description": "A simple furniture shop",
+  "author": "Julianne Adams <julianne@julianneadams.info>",
+  "license": "MIT",
   "main": "dist/server.js",
   "private": true,
   "engines": {
     "node": ">=16.0.0"
+  },
+  "prisma": {
+    "schema": "src/components/database/schema.prisma"
   },
   "scripts": {
     "build": "tsc && tsc-alias",
@@ -15,8 +20,6 @@
     "test": "NODE_ENV=test jest --coverage --verbose",
     "test:ci": "NODE_ENV=testci jest --config ./jest.config.js --collectCoverage --coverageDirectory=\"./coverage\" --ci --reporters=default --reporters=jest-junit --watchAll=false --verbose --silent=false"
   },
-  "author": "Julianne Adams <julianne@julianneadams.info>",
-  "license": "MIT",
   "devDependencies": {
     "@types/express": "^4.17.14",
     "@types/jest": "^29.2.3",
