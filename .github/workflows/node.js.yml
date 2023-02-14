@@ -5,9 +5,9 @@ name: Tests and Deployment
 
 on:
   push:
-    branches: ["staging", "production"]
+    branches: ["staging", "production", "master"]
   pull_request:
-    branches: ["staging", "production"]
+    branches: ["staging", "production", "master"]
 
 jobs:
   Test:
