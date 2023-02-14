@@ -1,4 +1,3 @@
-import database from "@components/database";
 import logger from "@utils/logger";
 import { ErrorHandler } from "@utils/errors";
 import { appConfig } from "@utils/appConfig";
@@ -8,7 +7,7 @@ import app from "./app";
 (async () => {
   await runLoaders(app);
   logger.info("Connecting to database...");
-  await database.verifyConnection();
+  // await database.verifyConnection();
   logger.info("Connected to database.");
 })();
 
@@ -28,7 +27,7 @@ const gracefulShutdown = (cause: string) => {
 
   logger.info("Closing the database connection...");
   try {
-    database.disconnect();
+    // database.disconnect();
     logger.info("Database connection closed.");
   } catch (err) {
     logger.error(err);
