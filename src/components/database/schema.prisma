@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  ProductId     Int         @id @default(autoincrement())
+  Uuid          Bytes       @db.Binary(16) @unique
+  Slug          String?     @db.VarChar(22) @unique
+  CreatedAt     DateTime    @default(now())
+  UpdatedAt     DateTime?   @updatedAt
+  DeletedAt     DateTime?
+  Name          String      @db.Text
+  Description   String      @db.Text
+  RegularPrice  Decimal     @db.Decimal()
+  SalePrice     Decimal?    @db.Decimal()
+  ImageURL      String?     @db.Text
+  Category      Category    @relation(fields: [CategoryId], references: [CategoryId])
+  CategoryId    Int
+  SubCategory   SubCategory @relation(fields: [SubCategoryId], references: [SubCategoryId])
+  SubCategoryId Int
+  Room          Room?       @relation(fields: [RoomId], references: [RoomId])
+  RoomId        Int?
+  Brand         Brand       @relation(fields: [BrandId], references: [BrandId])
+  BrandId       Int
+  Color         Color       @relation(fields: [ColorId], references: [ColorId])
+  ColorId       Int
+}
+
+model Category {
+  CategoryId  Int       @id @default(autoincrement())
+  Uuid        Bytes     @db.Binary(16) @unique
+  Slug        String?   @db.VarChar(22) @unique
+  Name        String    @db.VarChar(255)
+  Products    Product[]
+}
+
+model SubCategory {
+  SubCategoryId Int       @id @default(autoincrement())
+  Uuid          Bytes     @db.Binary(16) @unique
+  Slug          String?   @db.VarChar(22) @unique
+  Name          String    @db.VarChar(255)
+  Products      Product[]
+}
+
+model Room {
+  RoomId      Int       @id @default(autoincrement())
+  Uuid        Bytes     @db.Binary(16) @unique
+  Slug        String?   @db.VarChar(22) @unique
+  Name        String    @db.VarChar(255)
+  Products    Product[]
+}
+
+model Brand {
+  BrandId     Int       @id @default(autoincrement())
+  Uuid        Bytes     @db.Binary(16) @unique
+  Slug        String?   @db.VarChar(22) @unique
+  Name        String    @db.VarChar(255)
+  Products    Product[]
+}
+
+model Color {
+  ColorId     Int       @id @default(autoincrement())
+  Uuid        Bytes     @db.Binary(16) @unique
+  Slug        String?   @db.VarChar(22) @unique
+  Name        String    @db.VarChar(255)
+  Products    Product[]
+}
