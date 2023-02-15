@@ -65,9 +65,9 @@ jobs:
       - run: npm run test:ci
 
   DeployStaging:
-    if: github.event.ref == 'refs/heads/staging'
     name: Deploy to Staging
-    needs: [Test]
+    needs: Test
+    if: github.event.ref == 'refs/heads/staging' && always() && needs.Test.result == 'success'
     runs-on: ubuntu-latest
     environment: staging
     env:
@@ -78,9 +78,9 @@ jobs:
         run: npx prisma migrate deploy
 
   DeployProduction:
-    if: github.event.ref == 'refs/heads/production'
     name: Deploy to Production
-    needs: [DeployStaging]
+    needs: DeployStaging
+    if: github.event.ref == 'refs/heads/production' && always() && needs.DeployStaging.result == 'success'
     runs-on: ubuntu-latest
     environment: production
     env:
