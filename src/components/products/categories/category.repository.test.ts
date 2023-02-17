@@ -1,4 +1,4 @@
-import { prismaMock } from "@utils/testHelpers";
+import prismaMock from "@utils/testHelpers";
 import CategoryRepository from "./category.repository";
 
 describe("The category repository", () => {

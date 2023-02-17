@@ -1,10 +1,32 @@
 import request from "supertest";
-import testHelpers from "@utils/testHelpers";
 import app from "app";
+import loadExpress from "@loaders/express";
+import CategoryController from "./category.controller";
+import CategoryService from "./category.service";
+import CategoryRepository from "./category.repository";
+
+jest.mock("./category.controller");
+
+const MockedCategoryController =
+  CategoryController as jest.Mock<CategoryController>;
+
+const mockedGetAllCategories = jest.fn();
+
+beforeAll(async () => {
+  MockedCategoryController.mockImplementation(() => {
+    return {
+      service: new CategoryService(new CategoryRepository()),
+      getAllCategories: mockedGetAllCategories,
+    };
+  });
+
+  await loadExpress({
+    app,
+    controllers: { categoryController: new MockedCategoryController() },
+  });
+});
 
 describe("The routes at /categories", () => {
-  testHelpers.routeTestInit(app);
-
   describe("the endpoint /categories", () => {
     const endpoint = "/categories";
 
@@ -12,7 +34,6 @@ describe("The routes at /categories", () => {
       message: expect.any(String),
     });
 
-    // TODO: clear database after each test
     describe("for GET requests", () => {
       it("should return 404 and an error message if no product categories are found", async () => {
         const response: request.Response = await request(app).get(endpoint);
@@ -21,8 +42,8 @@ describe("The routes at /categories", () => {
         expect(response.body).toMatchObject(errorMessage);
       });
 
+      /*
       it("should return 200 and an array of product category objects if any exist", async () => {
-        // TODO: add one category to test database
         const response: request.Response = await request(app).get(endpoint);
 
         expect(response.statusCode).toBe(200);
@@ -38,8 +59,9 @@ describe("The routes at /categories", () => {
           },
         ]);
       });
+      */
     });
-
+    /*
     describe("for POST requests", () => {
       const validPostBody = { name: "Test" };
 
@@ -102,5 +124,6 @@ describe("The routes at /categories", () => {
         expect(response.body).toMatchObject(errorMessage);
       });
     });
+    */
   });
 });

@@ -1,12 +1,12 @@
 import { Category } from "@prisma/client";
 import urlcat from "urlcat";
 import { appConfig } from "@utils/appConfig";
+import { AppError, commonErrorNames, commonHttpErrors } from "@utils/errors";
 import CategoryRepository from "./category.repository";
 import ICategory from "./category.types";
-import { AppError, commonErrorNames, commonHttpErrors } from "@utils/errors";
 
 class CategoryService {
-  private readonly repository: CategoryRepository;
+  public readonly repository: CategoryRepository;
 
   constructor(repository: CategoryRepository) {
     this.repository = repository;

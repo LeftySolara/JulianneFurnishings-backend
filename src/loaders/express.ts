@@ -5,9 +5,20 @@ import { appConfig } from "@utils/appConfig";
 import { AppError, ErrorHandler, commonHttpErrors } from "@utils/errors";
 import logger from "@utils/logger";
 import pinoHTTP from "pino-http";
-import categoryRoutes from "@components/products/categories/category.routes";
+import CategoryRoutesWrapper from "@components/products/categories/category.routes";
+import CategoryController from "@components/products/categories/category.controller";
 
-const loadExpress = async ({ app }: { app: Application }) => {
+interface ControllerWrapper {
+  categoryController?: CategoryController;
+}
+
+const loadExpress = async ({
+  app,
+  controllers = {} as ControllerWrapper,
+}: {
+  app: Application;
+  controllers?: ControllerWrapper;
+}) => {
   app.use(bodyParser.json());
   app.use(cookieParser());
   app.use(urlencoded({ extended: true }));
@@ -29,7 +40,11 @@ const loadExpress = async ({ app }: { app: Application }) => {
     next();
   });
 
-  app.use("/categories", categoryRoutes);
+  const categoryRoutes = controllers
+    ? new CategoryRoutesWrapper(controllers.categoryController)
+    : new CategoryRoutesWrapper();
+
+  app.use("/categories", categoryRoutes.router);
 
   app.use(
     /* eslint-disable no-unused-vars,@typescript-eslint/no-unused-vars */
@@ -37,10 +52,6 @@ const loadExpress = async ({ app }: { app: Application }) => {
       await ErrorHandler.handleError(err, res);
     },
   );
-
-  app.get("/", (req, res) => {
-    return res.status(commonHttpErrors.ok).json("Hello World!");
-  });
 
   return app;
 };

@@ -4,7 +4,7 @@ import CategoryService from "./category.service";
 import ICategory from "./category.types";
 
 class CategoryController {
-  private readonly service: CategoryService;
+  public readonly service: CategoryService;
 
   constructor(service: CategoryService) {
     this.service = service;
@@ -15,7 +15,11 @@ class CategoryController {
    *
    * @returns An array of categories in JSON format.
    */
-  async getAllCategories(req: Request, res: Response, next: NextFunction) {
+  getAllCategories = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
     let categories: ICategory[] = [];
 
     try {
@@ -31,7 +35,7 @@ class CategoryController {
     }
 
     return res.status(commonHttpErrors.ok).json(categories);
-  }
+  };
 }
 
 export default CategoryController;
