@@ -7,7 +7,10 @@ describe("The routes at /categories", () => {
 
   describe("the endpoint /categories", () => {
     const endpoint = "/categories";
-    const errorMessage = { message: String };
+
+    const errorMessage = expect.objectContaining({
+      message: expect.any(String),
+    });
 
     // TODO: clear database after each test
     describe("for GET requests", () => {
@@ -25,13 +28,13 @@ describe("The routes at /categories", () => {
         expect(response.statusCode).toBe(200);
         expect(response.body).toMatchObject([
           {
-            self: String,
-            uuid: String,
-            slug: String,
-            createdAt: String,
-            updatedAt: String,
-            deletedAt: String,
-            name: String,
+            self: expect.any(String),
+            uuid: expect.any(String),
+            slug: expect.any(String),
+            createdAt: expect.any(String),
+            updatedAt: expect.any(String),
+            deletedAt: expect.any(String),
+            name: expect.any(String),
           },
         ]);
       });
@@ -51,13 +54,13 @@ describe("The routes at /categories", () => {
 
         expect(response.statusCode).toBe(201);
         expect(response.body).toMatchObject({
-          self: String,
-          uuid: String,
-          slug: String,
-          createdAt: String,
-          updatedAt: String,
-          deletedAt: String,
-          name: String,
+          self: expect.any(String),
+          uuid: expect.any(String),
+          slug: expect.any(String),
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+          deletedAt: expect.any(String),
+          name: expect.any(String),
         });
       });
 
@@ -100,6 +103,4 @@ describe("The routes at /categories", () => {
       });
     });
   });
-
-  describe("the endpoint /categories/{slug}", () => {});
 });
