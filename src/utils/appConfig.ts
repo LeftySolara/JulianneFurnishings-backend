@@ -4,6 +4,7 @@ interface IAppConfig {
   express: {
     serverPort: string | undefined;
     corsOrigin: string | undefined;
+    baseUrl: string | undefined;
   };
   logger: {
     logLevel: string | undefined;
@@ -35,6 +36,7 @@ const appConfig: IAppConfig = {
   express: {
     serverPort: process.env.PORT,
     corsOrigin: process.env.CORS_ORIGIN,
+    baseUrl: process.env.BASE_URL,
   },
   logger: {
     logLevel: process.env.LOG_LEVEL,
