@@ -4,6 +4,7 @@ import { appConfig } from "@utils/appConfig";
 import { AppError, ErrorHandler, commonHttpErrors } from "@utils/errors";
 import logger from "@utils/logger";
 import pinoHTTP from "pino-http";
+import categoryRoutes from "@components/products/categories/category.routes";
 
 const loadExpress = async ({ app }: { app: Application }) => {
   app.use(bodyParser.json());
@@ -25,6 +26,8 @@ const loadExpress = async ({ app }: { app: Application }) => {
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
     next();
   });
+
+  app.use("/categories", categoryRoutes);
 
   app.use(
     /* eslint-disable no-unused-vars,@typescript-eslint/no-unused-vars */
