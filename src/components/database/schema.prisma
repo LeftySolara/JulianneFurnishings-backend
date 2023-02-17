@@ -9,7 +9,7 @@ datasource db {
 
 model Product {
   ProductId     Int         @id @default(autoincrement())
-  Uuid          Bytes       @unique @db.Binary(16)
+  Uuid          String      @unique
   Slug          String?     @unique @db.VarChar(22)
   CreatedAt     DateTime    @default(now())
   UpdatedAt     DateTime?   @updatedAt
@@ -33,7 +33,7 @@ model Product {
 
 model Category {
   CategoryId Int       @id @default(autoincrement())
-  Uuid       Bytes     @unique @db.Binary(16)
+  Uuid       String    @unique
   Slug       String?   @unique @db.VarChar(22)
   CreatedAt  DateTime  @default(now())
   UpdatedAt  DateTime? @updatedAt
@@ -44,7 +44,7 @@ model Category {
 
 model SubCategory {
   SubCategoryId Int       @id @default(autoincrement())
-  Uuid          Bytes     @unique @db.Binary(16)
+  Uuid          String    @unique
   Slug          String?   @unique @db.VarChar(22)
   CreatedAt     DateTime  @default(now())
   UpdatedAt     DateTime? @updatedAt
@@ -55,7 +55,7 @@ model SubCategory {
 
 model Room {
   RoomId    Int       @id @default(autoincrement())
-  Uuid      Bytes     @unique @db.Binary(16)
+  Uuid      String    @unique
   Slug      String?   @unique @db.VarChar(22)
   CreatedAt DateTime  @default(now())
   UpdatedAt DateTime? @updatedAt
@@ -66,7 +66,7 @@ model Room {
 
 model Brand {
   BrandId   Int       @id @default(autoincrement())
-  Uuid      Bytes     @unique @db.Binary(16)
+  Uuid      String    @unique
   Slug      String?   @unique @db.VarChar(22)
   CreatedAt DateTime  @default(now())
   UpdatedAt DateTime? @updatedAt
@@ -77,7 +77,7 @@ model Brand {
 
 model Color {
   ColorId   Int       @id @default(autoincrement())
-  Uuid      Bytes     @unique @db.Binary(16)
+  Uuid      String    @unique
   Slug      String?   @unique @db.VarChar(22)
   CreatedAt DateTime  @default(now())
   UpdatedAt DateTime? @updatedAt
