@@ -61,6 +61,9 @@ describe("The category controller", () => {
         body: {
           name: "Test",
         },
+        cookies: {
+          role: "admin",
+        },
       } as unknown;
 
       const mockResponse = {
@@ -79,6 +82,53 @@ describe("The category controller", () => {
       expect((mRes.json as any).mock.calls[0][0]).toEqual(mockCategory);
     });
 
-    // TODO: Test behavior for 401 and 403
+    it("should return 401 and an error message if credentials are invalid or missing", async () => {
+      const req = {
+        body: {
+          name: "Test",
+        },
+      } as unknown;
+
+      const mockResponse = {
+        json: jest.fn(),
+        status: jest.fn().mockReturnThis(),
+      } as unknown;
+
+      await controller.createCategory(
+        req as Request,
+        mockResponse as Response,
+        jest.fn(),
+      );
+
+      const mRes = mockResponse as Response;
+      expect(mRes.status).toBeCalledWith(401);
+      expect((mRes.json as any).mock.calls[0][0].toEqual(errorMessage));
+    });
+
+    it("should return 403 and an error message if a logged-in user does not have sufficient permissions", async () => {
+      const req = {
+        body: {
+          name: "Test",
+        },
+        cookies: {
+          role: "admin",
+        },
+      } as unknown;
+
+      const mockResponse = {
+        json: jest.fn(),
+        status: jest.fn().mockReturnThis(),
+      } as unknown;
+
+      await controller.createCategory(
+        req as Response,
+        mockResponse as Response,
+        jest.fn(),
+      );
+
+      const mRes = mockResponse as Response;
+      expect(mRes.status).toBeCalledWith(403);
+      expect((mRes.json as any).mock.calls[0][0].toEqual(errorMessage));
+    });
   });
 });
