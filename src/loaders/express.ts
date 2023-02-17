@@ -1,4 +1,5 @@
 import { Application, NextFunction, Request, Response } from "express";
+import cookieParser from "cookie-parser";
 import bodyParser, { urlencoded } from "body-parser";
 import { appConfig } from "@utils/appConfig";
 import { AppError, ErrorHandler, commonHttpErrors } from "@utils/errors";
@@ -8,6 +9,7 @@ import categoryRoutes from "@components/products/categories/category.routes";
 
 const loadExpress = async ({ app }: { app: Application }) => {
   app.use(bodyParser.json());
+  app.use(cookieParser());
   app.use(urlencoded({ extended: true }));
 
   app.use(pinoHTTP({ logger }));
