@@ -1,5 +1,6 @@
 module.exports = {
   testEnvironment: "node",
+  resetMocks: false,
   transform: {
     "^.+\\.ts?$": [
       "ts-jest",
