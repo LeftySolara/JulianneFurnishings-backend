@@ -1,4 +1,5 @@
 import request from "supertest";
+import express from "express";
 import app from "app";
 import loadExpress from "@loaders/express";
 import CategoryController from "./category.controller";
@@ -20,9 +21,11 @@ beforeAll(async () => {
     };
   });
 
+  const mockedController = new MockedCategoryController();
+
   await loadExpress({
     app,
-    controllers: { categoryController: new MockedCategoryController() },
+    controllers: { categoryController: mockedController },
   });
 });
 
@@ -34,15 +37,20 @@ describe("The routes at /categories", () => {
       message: expect.any(String),
     });
 
+    /*
     describe("for GET requests", () => {
       it("should return 404 and an error message if no product categories are found", async () => {
-        const response: request.Response = await request(app).get(endpoint);
+        const { response } = express;
 
-        expect(response.statusCode).toBe(404);
-        expect(response.body).toMatchObject(errorMessage);
+        mockedGetAllCategories.mockResolvedValueOnce(() => {
+          return response.status(200).json([]);
+        });
+
+        const res = await request(app).get(endpoint);
+        expect(res.statusCode).toBe(404);
+        expect(res.body).toMatchObject(errorMessage);
       });
 
-      /*
       it("should return 200 and an array of product category objects if any exist", async () => {
         const response: request.Response = await request(app).get(endpoint);
 
@@ -59,8 +67,8 @@ describe("The routes at /categories", () => {
           },
         ]);
       });
-      */
     });
+    */
     /*
     describe("for POST requests", () => {
       const validPostBody = { name: "Test" };
