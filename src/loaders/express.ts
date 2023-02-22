@@ -1,4 +1,5 @@
 import { Application, NextFunction, Request, Response } from "express";
+import { auth, requiredScopes } from "express-oauth2-jwt-bearer";
 import bodyParser, { urlencoded } from "body-parser";
 import { appConfig } from "@utils/appConfig";
 import { AppError, ErrorHandler, commonHttpErrors } from "@utils/errors";
@@ -6,6 +7,13 @@ import logger from "@utils/logger";
 import pinoHTTP from "pino-http";
 
 const loadExpress = async ({ app }: { app: Application }) => {
+  const checkJwt = auth({
+    audience: appConfig.auth0.audience,
+    issuerBaseURL: appConfig.auth0.issuerBaseUrl,
+  });
+
+  const checkScopes = requiredScopes("create:products");
+
   app.use(bodyParser.json());
   app.use(urlencoded({ extended: true }));
 
@@ -34,7 +42,19 @@ const loadExpress = async ({ app }: { app: Application }) => {
   );
 
   app.get("/", (req, res) => {
-    return res.status(commonHttpErrors.ok).json("Hello World!");
+    return res
+      .status(commonHttpErrors.ok)
+      .json("Hello World! This is a public endpoint!");
+  });
+
+  app.get("/private", checkJwt, (req, res) => {
+    return res.status(200).json("This is a private endpoint!");
+  });
+
+  app.get("/scopes", checkJwt, checkScopes, (req, res) => {
+    return res
+      .status(200)
+      .json("You need a scope of create:products to see this!");
   });
 
   return app;
