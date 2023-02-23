@@ -17,6 +17,10 @@ interface IAppConfig {
     port: number;
     dialect: string;
   };
+  auth0: {
+    audience: string;
+    issuerBaseUrl: string;
+  };
 }
 
 /* Load environment variables. If we're not running in a production environment, then
@@ -47,6 +51,10 @@ const appConfig: IAppConfig = {
     host: process.env.DATABASE_HOST as string,
     port: parseInt(process.env.DATABASE_PORT as string, 10),
     dialect: process.env.DATABASE_DIALECT as string,
+  },
+  auth0: {
+    audience: process.env.AUTH0_AUDIENCE as string,
+    issuerBaseUrl: process.env.AUTH0_ISSUER_BASE_URL as string,
   },
 };
 
