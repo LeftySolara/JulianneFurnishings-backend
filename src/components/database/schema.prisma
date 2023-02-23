@@ -9,8 +9,8 @@ datasource db {
 
 model Product {
   ProductId     Int         @id @default(autoincrement())
-  Uuid          Bytes       @db.Binary(16) @unique
-  Slug          String?     @db.VarChar(22) @unique
+  Uuid          Bytes       @unique @db.Binary(16)
+  Slug          String?     @unique @db.VarChar(22)
   CreatedAt     DateTime    @default(now())
   UpdatedAt     DateTime?   @updatedAt
   DeletedAt     DateTime?
@@ -32,41 +32,56 @@ model Product {
 }
 
 model Category {
-  CategoryId  Int       @id @default(autoincrement())
-  Uuid        Bytes     @db.Binary(16) @unique
-  Slug        String?   @db.VarChar(22) @unique
-  Name        String    @db.VarChar(255)
-  Products    Product[]
+  CategoryId Int       @id @default(autoincrement())
+  Uuid       Bytes     @unique @db.Binary(16)
+  Slug       String?   @unique @db.VarChar(22)
+  CreatedAt  DateTime  @default(now())
+  UpdatedAt  DateTime? @updatedAt
+  DeletedAt  DateTime?
+  Name       String    @db.VarChar(255)
+  Products   Product[]
 }
 
 model SubCategory {
   SubCategoryId Int       @id @default(autoincrement())
-  Uuid          Bytes     @db.Binary(16) @unique
-  Slug          String?   @db.VarChar(22) @unique
+  Uuid          Bytes     @unique @db.Binary(16)
+  Slug          String?   @unique @db.VarChar(22)
+  CreatedAt     DateTime  @default(now())
+  UpdatedAt     DateTime? @updatedAt
+  DeletedAt     DateTime?
   Name          String    @db.VarChar(255)
   Products      Product[]
 }
 
 model Room {
-  RoomId      Int       @id @default(autoincrement())
-  Uuid        Bytes     @db.Binary(16) @unique
-  Slug        String?   @db.VarChar(22) @unique
-  Name        String    @db.VarChar(255)
-  Products    Product[]
+  RoomId    Int       @id @default(autoincrement())
+  Uuid      Bytes     @unique @db.Binary(16)
+  Slug      String?   @unique @db.VarChar(22)
+  CreatedAt DateTime  @default(now())
+  UpdatedAt DateTime? @updatedAt
+  DeletedAt DateTime?
+  Name      String    @db.VarChar(255)
+  Products  Product[]
 }
 
 model Brand {
-  BrandId     Int       @id @default(autoincrement())
-  Uuid        Bytes     @db.Binary(16) @unique
-  Slug        String?   @db.VarChar(22) @unique
-  Name        String    @db.VarChar(255)
-  Products    Product[]
+  BrandId   Int       @id @default(autoincrement())
+  Uuid      Bytes     @unique @db.Binary(16)
+  Slug      String?   @unique @db.VarChar(22)
+  CreatedAt DateTime  @default(now())
+  UpdatedAt DateTime? @updatedAt
+  DeletedAt DateTime?
+  Name      String    @db.VarChar(255)
+  Products  Product[]
 }
 
 model Color {
-  ColorId     Int       @id @default(autoincrement())
-  Uuid        Bytes     @db.Binary(16) @unique
-  Slug        String?   @db.VarChar(22) @unique
-  Name        String    @db.VarChar(255)
-  Products    Product[]
+  ColorId   Int       @id @default(autoincrement())
+  Uuid      Bytes     @unique @db.Binary(16)
+  Slug      String?   @unique @db.VarChar(22)
+  CreatedAt DateTime  @default(now())
+  UpdatedAt DateTime? @updatedAt
+  DeletedAt DateTime?
+  Name      String    @db.VarChar(255)
+  Products  Product[]
 }
