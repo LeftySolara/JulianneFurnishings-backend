@@ -33,6 +33,8 @@
       "@components/*": ["components/*"],
       "@components/database": ["components/database"],
       "@components/database/*": ["components/database/*"],
+      "@core/logic/*": ["core/logic/*"],
+      "@core/domain/*": ["core/domain/*"],
       "@loaders": ["loaders"],
       "@loaders/*": ["loaders/*"],
       "@utils": ["utils"],
