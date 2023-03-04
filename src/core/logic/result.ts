@@ -3,11 +3,11 @@ class Result<T> {
 
   public isFailure: boolean;
 
-  public error: string | null | undefined;
+  public error: T | string | null | undefined;
 
   private value: T | null | undefined;
 
-  private constructor(isSuccess: boolean, error?: string | null, value?: T) {
+  public constructor(isSuccess: boolean, error?: T | string | null, value?: T) {
     if (isSuccess && error) {
       throw new Error(
         "InvalidOperation: A result cannot be successful and contain an error",
@@ -30,7 +30,7 @@ class Result<T> {
 
   public getValue(): T {
     if (!this.isSuccess || !this.value) {
-      throw new Error("Can't retrieve the value from a failed result.");
+      return this.error as T;
     }
 
     return this.value;
@@ -63,3 +63,5 @@ class Result<T> {
     return Result.ok<any>();
   }
 }
+
+export default Result;
