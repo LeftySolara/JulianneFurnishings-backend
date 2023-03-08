@@ -62,6 +62,7 @@
     "pino-http": "^8.3.3",
     "prisma": "^4.10.1",
     "sequelize": "^6.25.8",
+    "shallow-equal-object": "^1.1.1",
     "uuid": "^9.0.0"
   }
 }
