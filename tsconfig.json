@@ -29,12 +29,10 @@
     // "moduleResolution": "node",                       /* Specify how TypeScript looks up a file from a given module specifier. */
     "baseUrl": "./src" /* Specify the base directory to resolve non-relative module names. */,
     "paths": {
-      "@components": ["components"],
-      "@components/*": ["components/*"],
-      "@components/database": ["components/database"],
-      "@components/database/*": ["components/database/*"],
       "@core/logic/*": ["core/logic/*"],
       "@core/domain/*": ["core/domain/*"],
+      "@infra/database/*": ["infra/database/*"],
+      "@infra/http/*": ["infra/http/*"],
       "@loaders": ["loaders"],
       "@loaders/*": ["loaders/*"],
       "@utils": ["utils"],
