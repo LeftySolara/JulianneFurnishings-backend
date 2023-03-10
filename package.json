@@ -10,13 +10,13 @@
     "node": ">=16.0.0"
   },
   "prisma": {
-    "schema": "src/components/database/schema.prisma"
+    "schema": "src/infra/database/schema.prisma"
   },
   "scripts": {
     "build": "tsc && tsc-alias",
-    "start": "NODE_ENV=production node dist/server.js",
-    "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register ./src/server.ts",
-    "prod": "NODE_ENV=production ts-node -r tsconfig-paths/register ./src/server.ts",
+    "start": "NODE_ENV=production node dist/infra/http/server.js",
+    "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register ./src/infra/http/server.ts",
+    "prod": "NODE_ENV=production ts-node -r tsconfig-paths/register ./src/infra/http/server.ts",
     "test": "NODE_ENV=test jest --coverage --verbose",
     "test:ci": "NODE_ENV=testci jest --config ./jest.config.js --collectCoverage --coverageDirectory=\"./coverage\" --ci --reporters=default --reporters=jest-junit --watchAll=false --verbose --silent=false",
     "migrate:deploy": "prisma migrate deploy",
@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",
+    "@types/uuid": "^9.0.1",
     "body-parser": "^1.20.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
@@ -60,6 +61,8 @@
     "pino": "^8.9.0",
     "pino-http": "^8.3.3",
     "prisma": "^4.10.1",
-    "sequelize": "^6.25.8"
+    "sequelize": "^6.25.8",
+    "shallow-equal-object": "^1.1.1",
+    "uuid": "^9.0.0"
   }
 }

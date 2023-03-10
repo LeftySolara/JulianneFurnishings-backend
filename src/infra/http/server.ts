@@ -1,11 +1,14 @@
 import logger from "@utils/logger";
 import { ErrorHandler } from "@utils/errors";
 import { appConfig } from "@utils/appConfig";
-import runLoaders from "@loaders/index";
 import app from "./app";
+import loadExpress from "./express";
 
 (async () => {
-  await runLoaders(app);
+  logger.info("Starting express...");
+  await loadExpress({ app });
+  logger.info("Express initialized.");
+
   logger.info("Connecting to database...");
   // await database.verifyConnection();
   logger.info("Connected to database.");
