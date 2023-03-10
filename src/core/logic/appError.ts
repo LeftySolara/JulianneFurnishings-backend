@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import DomainError from "@core/domain/domainError";
-import Result from "./result";
+import { Result } from "./result";
 
 /**
  * @description General application errors
  */
-export namespace AppError {
+export namespace GenericAppError {
   export class UnexpectedError extends Result<DomainError> {
     public constructor(err: any) {
       super(false, {
