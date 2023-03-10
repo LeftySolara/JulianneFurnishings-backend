@@ -15,8 +15,12 @@ export abstract class Entity<T> {
 
   public readonly props: T;
 
-  private constructor(props: T, id?: string) {
-    this.uuid = id || uuidv4();
+  get id(): string {
+    return this.uuid;
+  }
+
+  public constructor(props: T, uuid?: string) {
+    this.uuid = uuid || uuidv4();
     this.props = props;
   }
 
