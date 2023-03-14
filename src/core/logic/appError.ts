@@ -1,16 +1,22 @@
-export class AppError extends Error {
-  public readonly name: string;
+export namespace Errors {
+  export class AppError extends Error {
+    public readonly name: string;
 
-  public readonly isOperational: boolean;
+    public readonly isOperational: boolean;
 
-  constructor(name: string, description: string, isOperational: boolean) {
-    super(description);
+    constructor(name: string, description: string, isOperational: boolean) {
+      super(description);
 
-    Object.setPrototypeOf(this, new.target.prototype);
+      Object.setPrototypeOf(this, new.target.prototype);
 
-    this.name = name;
-    this.isOperational = isOperational;
+      this.name = name;
+      this.isOperational = isOperational;
 
-    Error.captureStackTrace(this);
+      Error.captureStackTrace(this);
+    }
   }
+
+  export const commonErrorNames = {
+    entityCreationError: "Entity creation error",
+  };
 }

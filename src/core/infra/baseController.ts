@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
+import { validationResult } from "express-validator";
 import logger from "@utils/logger";
+import { Errors } from "@core/logic/appError";
 
 export abstract class BaseController {
-  protected req: Request | undefined;
+  protected req!: Request;
 
-  protected res: Response | undefined;
+  protected res!: Response;
 
   protected abstract executeImpl(): Promise<void | any>;
 
@@ -12,7 +14,12 @@ export abstract class BaseController {
     this.req = req;
     this.res = res;
 
-    this.executeImpl();
+    const validationError = this.validateRequestInputs();
+    if (validationError) {
+      this.badRequest(validationError.message);
+    } else {
+      this.executeImpl();
+    }
   }
 
   public static jsonResponse(
@@ -36,11 +43,11 @@ export abstract class BaseController {
     return res.sendStatus(201);
   }
 
-  public clientError(message?: string) {
+  public badRequest(message?: string) {
     return BaseController.jsonResponse(
       this.res as Response,
       400,
-      message || "Unauthorized",
+      message || "Bad Request",
     );
   }
 
@@ -48,7 +55,7 @@ export abstract class BaseController {
     return BaseController.jsonResponse(
       this.res as Response,
       401,
-      message || "unauthorized",
+      message || "Unauthorized",
     );
   }
 
@@ -97,5 +104,20 @@ export abstract class BaseController {
     return (this.res as Response).status(500).json({
       message: error.toString(),
     });
+  }
+
+  private validateRequestInputs(): Errors.AppError | null {
+    const result = validationResult(this.req);
+
+    if (!result.isEmpty()) {
+      const err = result.array({ onlyFirstError: true })[0];
+      const errMsg = `${err.param} - ${err.msg}.`;
+      logger.error(
+        `Invalid inputs passed for ${this.req.method} request at ${this.req.originalUrl}: ${errMsg}`,
+      );
+      return new Errors.AppError("Validation Error", errMsg, true);
+    }
+
+    return null;
   }
 }

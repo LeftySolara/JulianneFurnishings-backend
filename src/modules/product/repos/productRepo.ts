@@ -71,3 +71,5 @@ export class ProductRepo implements IProductRepo {
     /* TODO: Implement me! */
   }
 }
+
+export const productRepo = new ProductRepo();

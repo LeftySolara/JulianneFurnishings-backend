@@ -1,9 +1,9 @@
 import logger from "@utils/logger";
-import { AppError } from "./appError";
+import { Errors } from "./appError";
 
 export class ErrorHandler {
   private static isTrustedError(error: Error) {
-    if (error instanceof AppError) {
+    if (error instanceof Errors.AppError) {
       return error.isOperational;
     }
     return false;

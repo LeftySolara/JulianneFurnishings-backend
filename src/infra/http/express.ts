@@ -2,9 +2,11 @@ import { Application, NextFunction, Request, Response } from "express";
 import { auth, requiredScopes } from "express-oauth2-jwt-bearer";
 import bodyParser, { urlencoded } from "body-parser";
 import { appConfig } from "@utils/appConfig";
-import { AppError, ErrorHandler, commonHttpErrors } from "@utils/errors";
 import logger from "@utils/logger";
 import pinoHTTP from "pino-http";
+import { Errors } from "@core/logic/appError";
+import { ErrorHandler } from "@core/logic/errorHandler";
+import { productRouter } from "@modules/product/infra/http/productRoutes";
 
 const loadExpress = async ({ app }: { app: Application }) => {
   const checkJwt = auth({
@@ -36,11 +38,20 @@ const loadExpress = async ({ app }: { app: Application }) => {
 
   app.use(
     /* eslint-disable no-unused-vars,@typescript-eslint/no-unused-vars */
-    async (err: AppError, req: Request, res: Response, next: NextFunction) => {
-      await ErrorHandler.handleError(err, res);
+    async (
+      err: Errors.AppError,
+      req: Request,
+      res: Response,
+      next: NextFunction,
+    ) => {
+      await ErrorHandler.handleError(err);
+      return res.status(500).json({ message: err.message });
     },
   );
 
+  app.use("/products", productRouter);
+
+  /*
   app.get("/", (req, res) => {
     return res
       .status(commonHttpErrors.ok)
@@ -56,6 +67,7 @@ const loadExpress = async ({ app }: { app: Application }) => {
       .status(200)
       .json("You need a scope of create:products to see this!");
   });
+  */
 
   return app;
 };
