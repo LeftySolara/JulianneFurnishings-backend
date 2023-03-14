@@ -3,6 +3,9 @@ import logger from "@utils/logger";
 import AppError from "./appError";
 import { commonHttpErrors } from "./errorTypes";
 
+/**
+ * @deprecated
+ */
 class ErrorHandler {
   private static async crashIfUntrustedErrorOrSendResponse(
     error: Error,

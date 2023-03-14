@@ -1,21 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import DomainError from "@core/domain/domainError";
-import { Result } from "./result";
+export class AppError extends Error {
+  public readonly name: string;
 
-/**
- * @description General application errors
- */
-export namespace GenericAppError {
-  export class UnexpectedError extends Result<DomainError> {
-    public constructor(err: any) {
-      super(false, {
-        message: "An unexpected error occurred.",
-        error: err,
-      });
-    }
+  public readonly isOperational: boolean;
 
-    public static create(err: any): UnexpectedError {
-      return new UnexpectedError(err);
-    }
+  constructor(name: string, description: string, isOperational: boolean) {
+    super(description);
+
+    Object.setPrototypeOf(this, new.target.prototype);
+
+    this.name = name;
+    this.isOperational = isOperational;
+
+    Error.captureStackTrace(this);
   }
 }

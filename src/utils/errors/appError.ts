@@ -1,5 +1,8 @@
 import { type HttpCode } from "@utils/errors/errorTypes";
 
+/**
+ * @deprecated
+ */
 class AppError extends Error {
   public readonly name: string;
 

@@ -1,5 +1,5 @@
 import logger from "@utils/logger";
-import { ErrorHandler } from "@utils/errors";
+import { ErrorHandler } from "@core/logic/errorHandler";
 import { appConfig } from "@utils/appConfig";
 import app from "./app";
 import loadExpress from "./express";
@@ -38,13 +38,11 @@ const gracefulShutdown = (cause: string) => {
 };
 
 process.on("uncaughtException", (err) => {
-  logger.error(err);
-  ErrorHandler.handleError(err, null);
+  ErrorHandler.handleError(err);
 });
 
 process.on("unhandledRejection", (err) => {
-  logger.error(err);
-  ErrorHandler.handleError(err as Error, null);
+  ErrorHandler.handleError(err as Error);
 });
 
 process.on("SIGTERM", () => gracefulShutdown("app termination"));
