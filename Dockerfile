@@ -14,12 +14,13 @@ RUN npm run test
 FROM base as dev
 COPY [".env.development", "./"]
 ENV NODE_ENV=development
-RUN npm ci
+RUN npm install
 COPY . .
 EXPOSE 9229
 # RUN npx prisma generate
 # RUN npm run dev:migrate | npx pino-pretty
-RUN npm run dev
+RUN npm run build
+CMD ["npm", "run", "dev"]
 
 FROM base as prod
 RUN npm ci --production

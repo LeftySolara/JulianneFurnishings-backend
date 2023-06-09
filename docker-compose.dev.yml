@@ -13,8 +13,8 @@ services:
       MYSQL_USER: mariadb
       MYSQL_PASSWORD: mariadb
     volumes:
-      - jf-mariadb-data:/var/lib/mysql/julianneFurnishings
-      - jf-mariadb-data_config:/var/lib/mysql/julianneFurnishings_config
+      - backend_jf-mariadb-data:/var/lib/mysql/julianneFurnishings
+      - backend_jf-mariadb-data_config:/var/lib/mysql/julianneFurnishings_config
     restart: unless-stopped
 
   julianne-furnishings:
@@ -34,8 +34,7 @@ services:
     restart: always
     volumes:
       - ./:/app
-      - /app/node_modules
 
 volumes:
- jf-mariadb-data:
- jf-mariadb-data_config:
+  backend_jf-mariadb-data:
+  backend_jf-mariadb-data_config:
