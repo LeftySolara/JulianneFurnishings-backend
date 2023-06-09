@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build": "tsc && tsc-alias",
-    "dev": "NODE_ENV=development ts-node-dev --inspect=0.0.0.0:9229 -r tsconfig-paths/register ./src/infra/http/server.ts",
+    "dev": "NODE_ENV=development ts-node-dev --inspect=0.0.0.0:9229 -r tsconfig-paths/register ./src/infra/http/server.ts | npx pino-pretty",
     "dev:migrate": "prisma migrate dev && npm run dev",
     "prod": "NODE_ENV=production ts-node -r tsconfig-paths/register ./src/infra/http/server.ts",
     "prod:migrate": "prisma migrate deploy && npm run prod",
@@ -38,6 +38,9 @@
   "dependencies": {
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
-    "express-validator": "^7.0.1"
+    "express-validator": "^7.0.1",
+    "pino": "^8.14.1",
+    "pino-http": "^8.3.3",
+    "pino-pretty": "^10.0.0"
   }
 }
