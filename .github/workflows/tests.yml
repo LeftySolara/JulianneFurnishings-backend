@@ -24,32 +24,34 @@ jobs:
       DATABASE_PASSWORD: "password"
       DATABASE_HOST: 127.0.0.1
       DATABASE_PORT: 3306
-      DATABASE_DIALECT: "mariadb"
-
-    services:
-      mariadb:
-        image: mariadb:latest
-        ports:
-          - 3306
-        env:
-          MYSQL_USER: test
-          MYSQL_PASSWORD: password
-          MYSQL_DATABASE: test
-          MYSQL_ROOT_PASSWORD: password
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      DATABASE_DIALECT: "mysql"
 
     strategy:
       matrix:
         node-version: [14.x, 16.x, 18.x]
 
     steps:
+      - name: Initialize MySQL
+        run: sudo systemctl start mysql.service
+
+      - name: Initialize database
+        run: |
+          mysql -e 'CREATE DATABASE ${{ env.DATABASE_NAME }};' \
+          -u ${{ env.DATABASE_USER }} -p ${{ env.DATABASE_PASSWORD }}
+
+      - name: Boost database user
+        run: |
+          mysql -e "ALTER USER '${{ env.DATABASE_USER }}'@'localhost' \
+          IDENTIFIED WITH mysql_native_password BY 'root';" \
+          -u ${{ env.DATABASE_USER }} -p ${{ env.DATABASE_PASSWORD }}
+
       - uses: actions/checkout@v3
 
-      - name: Verify MariaDB connection
+      - name: Verify MySQL connection
         env:
-          PORT: ${{ job.services.mariadb.ports[3306] }}
+          PORT: 3306
         run: |
-          while ! mysqladmin ping -h "127.0.0.1" -P "$PORT" --silent; do
+          while ! mysqladmin ping -h "127.0.0.1" -P "${{ env.DATABASE_PORT }}" --silent; do
             sleep 1
           done
 
