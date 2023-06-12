@@ -20,7 +20,7 @@ jobs:
       LOG_LOCATION: "./test.log"
       CORS_ORIGIN: 127.0.0.1
       DATABASE_NAME: "test"
-      DATABASE_USER: "user"
+      DATABASE_USER: "test"
       DATABASE_PASSWORD: "password"
       DATABASE_HOST: 127.0.0.1
       DATABASE_PORT: 3306
@@ -32,7 +32,7 @@ jobs:
         ports:
           - 3306
         env:
-          MYSQL_USER: user
+          MYSQL_USER: test
           MYSQL_PASSWORD: password
           MYSQL_DATABASE: test
           MYSQL_ROOT_PASSWORD: password
