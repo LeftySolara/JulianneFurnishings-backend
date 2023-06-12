@@ -36,11 +36,11 @@ jobs:
 
       - name: Initialize database
         run: |
-          mysql -e 'CREATE DATABASE ${{ env.DATABASE_NAME }};' -u ${{ env.DATABASE_USER }} -p ${{ env.DATABASE_PASSWORD }}
+          mysql -h ${{ env.DATABASE_HOST }} -e 'CREATE DATABASE ${{ env.DATABASE_NAME }};' -u ${{ env.DATABASE_USER }} -p ${{ env.DATABASE_PASSWORD }}
 
       - name: Boost database user
         run: |
-          mysql -e "ALTER USER '${{ env.DATABASE_USER }}'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';" -u ${{ env.DATABASE_USER }} -p ${{ env.DATABASE_PASSWORD }}
+          mysql -h ${{ env.DATABASE_HOST }} -e "ALTER USER '${{ env.DATABASE_USER }}'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';" -u ${{ env.DATABASE_USER }} -p ${{ env.DATABASE_PASSWORD }}
 
       - uses: actions/checkout@v3
 
