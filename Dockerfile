@@ -17,14 +17,11 @@ ENV NODE_ENV=development
 RUN npm install
 COPY . .
 EXPOSE 9229
-# RUN npx prisma generate
-# RUN npm run dev:migrate | npx pino-pretty
-RUN npm run build
-CMD ["npm", "run", "dev"]
+RUN npx prisma generate
+CMD ["npm", "run", "dev:migrate"]
 
 FROM base as prod
 RUN npm ci --production
 COPY . .
-# RUN npx prisma generate
-# CMD npm run prod:migrate
-RUN npm run prod
+RUN npx prisma generate
+CMD ["npm", "run", "prod:migrate"]
