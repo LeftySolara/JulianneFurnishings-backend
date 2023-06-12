@@ -2,7 +2,7 @@
 
 FROM node:18-alpine as base
 WORKDIR /app
-COPY ["package.json", "package-lock.json", "tsconfig.json", ".env", "./"]
+COPY ["package.json", "package-lock.json", "tsconfig.json", "./"]
 EXPOSE 5000
 
 FROM base as test
@@ -12,7 +12,7 @@ COPY . .
 RUN npm run test
 
 FROM base as dev
-COPY [".env.development", "./"]
+COPY [".env", ".env.development", "./"]
 ENV NODE_ENV=development
 RUN npm install
 COPY . .
