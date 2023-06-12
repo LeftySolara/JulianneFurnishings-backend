@@ -1,0 +1,64 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Tests
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  Test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    env:
+      SERVER_PORT: 5000
+      LOG_LEVEL: "debug"
+      LOG_LOCATION: "./test.log"
+      CORS_ORIGIN: 127.0.0.1
+      DATABASE_NAME: "test"
+      DATABASE_USER: "user"
+      DATABASE_PASSWORD: "password"
+      DATABASE_HOST: 127.0.0.1
+      DATABASE_PORT: 3306
+      DATABASE_DIALECT: "mariadb"
+
+    services:
+      mariadb:
+        image: mariadb:latest
+        ports:
+          - 3306
+        env:
+          MYSQL_USER: user
+          MYSQL_PASSWORD: password
+          MYSQL_DATABASE: test
+          MYSQL_ROOT_PASSWORD: password
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Verify MariaDB connection
+        env:
+          PORT: ${{ job.services.mariadb.ports[3306] }}
+        run: |
+          while ! mysqladmin ping -h "127.0.0.1" -P "$PORT" --silent; do
+            sleep 1
+          done
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm run test:ci
