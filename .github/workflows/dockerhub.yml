@@ -24,4 +24,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/julianneFurnishingsBackend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/julianne-furnishings-backend:latest
