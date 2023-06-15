@@ -5,6 +5,7 @@ import { EmailAddress } from "@components/users/domain/emailAddress";
 import { UniqueEntityId } from "@domain/uniqueEntityId";
 import { Result } from "@utils/result";
 import { Guard, IGuardResult } from "@utils/guard";
+import { Slug } from "@domain/slug";
 
 interface IUserProps {
   firstName: Name;
@@ -17,10 +18,6 @@ interface IUserProps {
 }
 
 class User extends Entity<IUserProps> {
-  get uuid(): UniqueEntityId {
-    return this.id;
-  }
-
   get firstName(): Name {
     return this.props.firstName;
   }
@@ -50,13 +47,14 @@ class User extends Entity<IUserProps> {
   }
 
   /* eslint-disable-next-line no-useless-constructor */
-  private constructor(props: IUserProps, id?: UniqueEntityId) {
-    super(props, id);
+  private constructor(props: IUserProps, id?: UniqueEntityId, slug?: Slug) {
+    super(props, id, slug);
   }
 
   public static createUser(
     props: IUserProps,
     id?: UniqueEntityId,
+    slug?: Slug,
   ): Result<User> {
     const userPropsCheck: IGuardResult = Guard.againstNullOrUndefinedBulk([
       { argumentName: "firstName", argument: props.firstName },
@@ -70,7 +68,7 @@ class User extends Entity<IUserProps> {
       return Result.fail<User>(userPropsCheck.message as string);
     }
 
-    return Result.ok<User>(new User(props, id));
+    return Result.ok<User>(new User(props, id, slug));
   }
 }
 

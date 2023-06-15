@@ -14,6 +14,14 @@ abstract class Entity<T> {
 
   protected props: T;
 
+  get uuid(): UniqueEntityId {
+    return this.id;
+  }
+
+  get entitySlug(): Slug {
+    return this.slug;
+  }
+
   constructor(props: T, id?: UniqueEntityId, slug?: Slug) {
     this.id = id ?? new UniqueEntityId();
     this.slug = slug ?? new Slug(undefined, this.id.props.value);
