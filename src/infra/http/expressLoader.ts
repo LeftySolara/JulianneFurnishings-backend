@@ -3,6 +3,7 @@ import bodyParser, { urlencoded } from "body-parser";
 import { pinoHttp } from "pino-http";
 import { appConfig } from "@utils/appConfig";
 import logger from "@utils/logger";
+import { usersRouter } from "@components/users/users.routes";
 
 const loadExpress = async ({ app }: { app: Application }) => {
   app.use(bodyParser.json());
@@ -24,6 +25,8 @@ const loadExpress = async ({ app }: { app: Application }) => {
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
     next();
   });
+
+  app.use("/users", usersRouter);
 };
 
 export default loadExpress;
