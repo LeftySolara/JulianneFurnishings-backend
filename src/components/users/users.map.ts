@@ -8,15 +8,16 @@ import { Slug } from "@domain/slug";
 import { Result } from "@utils/result";
 
 interface RawUserProps {
+  userId: number;
   uuid: string;
-  slug: string | undefined;
+  slug: string | null;
   firstName: string;
   lastName: string;
   emailAddress: string;
   hashedPassword: string;
   createdAt: Date;
-  updatedAt: Date | undefined;
-  deletedAt: Date | undefined;
+  updatedAt: Date | null;
+  deletedAt: Date | null;
 }
 
 class UserMap {
@@ -78,8 +79,8 @@ class UserMap {
         emailAddress: emailAddress.getValue(),
         hashedPassword: hashedPassword.getValue(),
         createdAt,
-        updatedAt,
-        deletedAt,
+        updatedAt: updatedAt ?? undefined,
+        deletedAt: deletedAt ?? undefined,
       },
       uuid,
       slug,
