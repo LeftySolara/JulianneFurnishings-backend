@@ -6,10 +6,12 @@ COPY ["package.json", "package-lock.json", "tsconfig.json", "./"]
 EXPOSE 5000
 
 FROM base as test
+COPY [".env.test", "./"]
 ENV NODE_ENV=test
 RUN npm ci
 COPY . .
-RUN npm run test
+RUN npx prisma generate
+CMD ["npm", "run", "test:migrate"]
 
 FROM base as dev
 COPY [".env", ".env.development", "./"]

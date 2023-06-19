@@ -19,7 +19,7 @@ jobs:
       LOG_LEVEL: "debug"
       LOG_LOCATION: "./test.log"
       CORS_ORIGIN: 127.0.0.1
-      DATABASE_NAME: "test"
+      DATABASE_NAME: "julianneFurnishingsTest"
       DATABASE_USER: "root"
       DATABASE_PASSWORD: "root"
       DATABASE_HOST: 127.0.0.1
@@ -63,4 +63,4 @@ jobs:
 
       - run: npm ci
       - run: npm run build --if-present
-      - run: npm run test:ci
+      - run: npm run test:migrate
