@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: jf-mariadb-test
+    hostname: mariadb
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: mariadb
+      MYSQL_DATABASE: julianneFurnishingsTest
+      MYSQL_USER: mariadb
+      MYSQL_PASSWORD: mariadb
+    volumes:
+      - backend_jf-mariadb-test-data:/var/lib/mysql/julianneFurnishingsTest
+      - backend_jf-mariadb-test-data_config:/var/lib/mysql/julianneFurnishingsTest_config
+    restart: unless-stopped
+
+  julianne-furnishings:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test
+    container_name: julianne-furnishings-test
+    depends_on:
+      mariadb:
+        condition: service_started
+        restart: true
+    ports:
+      - "5000:5000"
+      - "9229:9229"
+    restart: always
+    volumes:
+      - ./:/app
+
+volumes:
+  backend_jf-mariadb-test-data:
+  backend_jf-mariadb-test-data_config:
