@@ -1,6 +1,5 @@
-import { v5 as uuidv5, validate as uuidValidate } from "uuid";
+import { v4 as uuidv4, validate as uuidValidate } from "uuid";
 import { ValueObject } from "@domain/valueObject";
-import { appConfig } from "@utils/appConfig";
 
 interface UniqueEntityIdProps {
   value: string;
@@ -14,12 +13,7 @@ class UniqueEntityId extends ValueObject<UniqueEntityIdProps> {
   constructor(props?: UniqueEntityIdProps) {
     /* If no UUID is given, generate a new one. */
     if (!props || props.value.length === 0) {
-      super({
-        value: uuidv5(
-          appConfig.uuid.name as string,
-          appConfig.uuid.namespace as string,
-        ),
-      });
+      super({ value: uuidv4() });
     } else {
       super(props);
     }

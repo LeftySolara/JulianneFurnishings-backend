@@ -1,4 +1,5 @@
 /* eslint-disable no-use-before-define */
+import { Slug } from "./slug";
 import { UniqueEntityId } from "./uniqueEntityId";
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -9,10 +10,21 @@ const isEntity = (v: any): v is Entity<any> => {
 abstract class Entity<T> {
   protected readonly id: UniqueEntityId;
 
+  protected readonly slug: Slug;
+
   protected props: T;
 
-  constructor(props: T, id?: UniqueEntityId) {
+  get uuid(): UniqueEntityId {
+    return this.id;
+  }
+
+  get entitySlug(): Slug {
+    return this.slug;
+  }
+
+  constructor(props: T, id?: UniqueEntityId, slug?: Slug) {
     this.id = id ?? new UniqueEntityId();
+    this.slug = slug ?? new Slug(undefined, this.id.props.value);
     this.props = props;
   }
 

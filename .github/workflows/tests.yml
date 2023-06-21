@@ -19,15 +19,17 @@ jobs:
       LOG_LEVEL: "debug"
       LOG_LOCATION: "./test.log"
       CORS_ORIGIN: 127.0.0.1
-      DATABASE_NAME: "test"
+      DATABASE_NAME: "julianneFurnishingsTest"
       DATABASE_USER: "root"
       DATABASE_PASSWORD: "root"
       DATABASE_HOST: 127.0.0.1
       DATABASE_PORT: 3306
       DATABASE_DIALECT: "mysql"
+      DATABASE_URL: "mysql://root:root@localhost:3306/julianneFurnishingsTest"
       MYSQL_USER: "root"
       MYSQL_PASSWORD: "root"
       MYSQL_ROOT_PASSWORD: "root"
+      NODE_ENV: "testci"
 
     strategy:
       matrix:

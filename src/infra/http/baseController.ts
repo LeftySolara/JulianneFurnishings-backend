@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import logger from "@utils/logger";
+import validateRequestInputs from "@utils/inputValidator";
 import { Request, Response } from "express";
 
 abstract class BaseController {
@@ -10,7 +11,13 @@ abstract class BaseController {
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   protected abstract executeImpl(): Promise<any>;
 
+  /* eslint-disable-next-line consistent-return */
   public async execute(req: Request, res: Response): Promise<void> {
+    const validationError = validateRequestInputs(req);
+    if (validationError) {
+      BaseController.jsonResponse(res, 422, validationError.message);
+    }
+
     this.req = req;
     this.res = res;
 
