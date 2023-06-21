@@ -14,7 +14,7 @@ RUN npx prisma generate
 CMD ["npm", "run", "test:migrate"]
 
 FROM base as dev
-COPY [".env", ".env.development", "./"]
+COPY [".env.development", "./"]
 ENV NODE_ENV=development
 RUN npm install
 COPY . .
