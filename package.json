@@ -15,7 +15,7 @@
     "start": "NODE_ENV=production node dist/infra/http/server.js",
     "test": "NODE_ENV=test vitest run",
     "test:migrate": "NODE_ENV=test dotenv -e .env.test -- prisma migrate dev && npm run test",
-    "test:ci": "NODE_ENV=testci vitest run"
+    "test:ci": "NODE_ENV=testci prisma migrate dev && vitest run"
   },
   "author": "Julianne Adams <julianne@julianneadams.info>",
   "license": "MIT",
