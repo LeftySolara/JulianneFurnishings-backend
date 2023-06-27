@@ -8,14 +8,78 @@ datasource db {
 }
 
 model User {
-  userId         Int      @id @default(autoincrement())
-  uuid           String   @unique(map: "uuid_UNIQUE") @db.VarChar(36)
-  slug           String?  @unique @db.VarChar(22)
-  hashedPassword String   @db.Char(60)
-  emailAddress   String   @unique(map: "emailAddress_UNIQUE") @db.VarChar(128)
-  firstName      String   @db.VarChar(45)
-  lastName       String   @db.VarChar(45)
-  createdAt      DateTime @default(now()) @db.Timestamp(0)
+  userId         Int       @id @default(autoincrement())
+  uuid           String    @unique(map: "uuid_UNIQUE") @db.VarChar(36)
+  slug           String?   @unique @db.VarChar(22)
+  hashedPassword String    @db.Char(60)
+  emailAddress   String    @unique(map: "emailAddress_UNIQUE") @db.VarChar(128)
+  firstName      String    @db.VarChar(45)
+  lastName       String    @db.VarChar(45)
+  createdAt      DateTime  @default(now()) @db.Timestamp(0)
   updatedAt      DateTime? @updatedAt
   deletedAt      DateTime?
+}
+
+model ProductCategory {
+  productCategoryId Int       @id @default(autoincrement())
+  uuid              String    @unique(map: "uuid_UNIQUE") @db.VarChar(36)
+  slug              String?   @unique @db.VarChar(22)
+  name              String    @unique @db.VarChar(256)
+  products          Product[]
+}
+
+model ProductSubcategory {
+  productSubcategoryId Int       @id @default(autoincrement())
+  uuid                 String    @unique(map: "uuid_UNIQUE") @db.VarChar(36)
+  slug                 String?   @unique @db.VarChar(22)
+  name                 String    @unique @db.VarChar(256)
+  products             Product[]
+}
+
+model ProductRoom {
+  productRoomId Int       @id @default(autoincrement())
+  uuid          String    @unique(map: "uuid_UNIQUE") @db.VarChar(36)
+  slug          String?   @unique @db.VarChar(22)
+  name          String    @unique @db.VarChar(256)
+  products      Product[]
+}
+
+model ProductBrand {
+  productBrandId Int       @id @default(autoincrement())
+  uuid           String    @unique(map: "uuid_UNIQUE") @db.VarChar(36)
+  slug           String?   @unique @db.VarChar(22)
+  name           String    @unique @db.VarChar(256)
+  products       Product[]
+}
+
+model ProductColor {
+  productColorId Int       @id @default(autoincrement())
+  uuid           String    @unique(map: "uuid_UNIQUE") @db.VarChar(36)
+  slug           String?   @unique @db.VarChar(22)
+  name           String    @unique @db.VarChar(256)
+  products       Product[]
+}
+
+model Product {
+  productId            Int                @id @default(autoincrement())
+  uuid                 String             @unique(map: "uuid_UNIQUE") @db.VarChar(36)
+  slug                 String?            @unique @db.VarChar(22)
+  createdAt            DateTime           @default(now()) @db.Timestamp(0)
+  updatedAt            DateTime?          @updatedAt
+  deletedAt            DateTime?
+  name                 String             @db.Text
+  description          String             @db.Text
+  regularPrice         Decimal            @db.Decimal()
+  salePrice            Decimal?           @db.Decimal()
+  imageURL             String?            @db.Text
+  productCategory      ProductCategory    @relation(fields: [productCategoryId], references: [productCategoryId])
+  productCategoryId    Int
+  productSubcategory   ProductSubcategory @relation(fields: [productSubcategoryId], references: [productSubcategoryId])
+  productSubcategoryId Int
+  productRoom          ProductRoom?       @relation(fields: [productRoomId], references: [productRoomId])
+  productRoomId        Int?
+  productBrand         ProductBrand       @relation(fields: [productBrandId], references: [productBrandId])
+  productBrandId       Int
+  productColor         ProductColor       @relation(fields: [productColorId], references: [productColorId])
+  productColorId       Int
 }

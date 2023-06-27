@@ -12,9 +12,6 @@ services:
       MYSQL_DATABASE: julianneFurnishingsTest
       MYSQL_USER: mariadb
       MYSQL_PASSWORD: mariadb
-    volumes:
-      - backend_jf-mariadb-test-data:/var/lib/mysql/julianneFurnishingsTest
-      - backend_jf-mariadb-test-data_config:/var/lib/mysql/julianneFurnishingsTest_config
     restart: unless-stopped
 
   julianne-furnishings:
@@ -33,7 +30,3 @@ services:
       - "9229:9229"
     volumes:
       - ./:/app
-
-volumes:
-  backend_jf-mariadb-test-data:
-  backend_jf-mariadb-test-data_config:
