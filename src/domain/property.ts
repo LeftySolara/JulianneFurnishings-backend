@@ -44,4 +44,4 @@ class Property extends Entity<IPropertyProps> {
   }
 }
 
-export { Property as ProductProperty };
+export { Property };
