@@ -3,6 +3,7 @@ version: "3.9"
 services:
   mariadb:
     image: mariadb:latest
+    command: --max_allowed_packet=32505856
     container_name: jf-mariadb-test
     hostname: mariadb
     ports:
@@ -10,9 +11,21 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: mariadb
       MYSQL_DATABASE: julianneFurnishingsTest
-      MYSQL_USER: mariadb
+      MYSQL_USER: root
       MYSQL_PASSWORD: mariadb
     restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mariadb-admin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "-pmariadb",
+        ]
 
   julianne-furnishings:
     stdin_open: true
@@ -23,7 +36,7 @@ services:
     container_name: julianne-furnishings-test
     depends_on:
       mariadb:
-        condition: service_started
+        condition: service_healthy
         restart: true
     ports:
       - "5000:5000"

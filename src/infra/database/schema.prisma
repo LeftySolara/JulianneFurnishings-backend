@@ -69,8 +69,8 @@ model Product {
   deletedAt            DateTime?
   name                 String             @db.Text
   description          String             @db.Text
-  regularPrice         Decimal            @db.Decimal()
-  salePrice            Decimal?           @db.Decimal()
+  regularPrice         Decimal            @db.Decimal(10, 2)
+  salePrice            Decimal?           @db.Decimal(10, 2)
   imageURL             String?            @db.Text
   productCategory      ProductCategory    @relation(fields: [productCategoryId], references: [productCategoryId])
   productCategoryId    Int
