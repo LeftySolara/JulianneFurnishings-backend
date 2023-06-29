@@ -2,4 +2,8 @@ import { PropertyDTO } from "@components/properties/domain/propertyDTO";
 
 type CategoryDTO = PropertyDTO;
 
-export { CategoryDTO };
+interface CreateCategoryDTO {
+  name: string;
+}
+
+export { CategoryDTO, CreateCategoryDTO };

@@ -3,7 +3,10 @@ import { UseCase } from "@domain/useCase";
 import { ICategoryRepo } from "@components/categories/categories.repository";
 import { Name } from "@components/properties/domain/name";
 import { Category } from "@components/categories/domain/category";
-import { CategoryDTO } from "@components/categories/domain/categoryDTO";
+import {
+  CreateCategoryDTO,
+  CategoryDTO,
+} from "@components/categories/domain/categoryDTO";
 import { CategoryMap } from "@components/categories/categories.map";
 import { CreateCategoryErrors } from "./createCategoryErrors";
 
@@ -13,14 +16,16 @@ type Response = Either<
   Result<CategoryDTO>
 >;
 
-class CreateCategoryUseCase implements UseCase<CategoryDTO, Promise<Response>> {
+class CreateCategoryUseCase
+  implements UseCase<CreateCategoryDTO, Promise<Response>>
+{
   private repo: ICategoryRepo;
 
   constructor(categoryRepo: ICategoryRepo) {
     this.repo = categoryRepo;
   }
 
-  async execute(request: CategoryDTO): Promise<Response> {
+  async execute(request: CreateCategoryDTO): Promise<Response> {
     const nameResult = Name.create(request.name);
     if (nameResult.isFailure) {
       return left(Result.fail<void>(nameResult.error)) as Response;
