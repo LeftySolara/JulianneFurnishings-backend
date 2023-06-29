@@ -1,4 +1,4 @@
-import { PropertyDTO } from "@domain/propertyDTO";
+import { PropertyDTO } from "@components/properties/domain/propertyDTO";
 
 type CategoryDTO = PropertyDTO;
 

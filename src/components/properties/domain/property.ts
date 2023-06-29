@@ -18,7 +18,7 @@ class Property extends Entity<IPropertyProps> {
   }
 
   /* eslint-disable-next-line no-useless-constructor */
-  private constructor(props: IPropertyProps, id?: UniqueEntityId, slug?: Slug) {
+  constructor(props: IPropertyProps, id?: UniqueEntityId, slug?: Slug) {
     super(props, id, slug);
   }
 

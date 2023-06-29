@@ -6,7 +6,7 @@ import { Slug } from "@domain/slug";
 
 interface RawPropertyProps {
   uuid: string;
-  slug: string;
+  slug: string | null;
   name: string;
 }
 

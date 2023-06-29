@@ -1,6 +1,7 @@
-import { Property } from "@domain/property";
+import { Property } from "@components/properties/domain/property";
 
-type Category = Property;
+class Category extends Property {}
+
 type CategoryCollection = Category[];
 
 export { Category, CategoryCollection };
