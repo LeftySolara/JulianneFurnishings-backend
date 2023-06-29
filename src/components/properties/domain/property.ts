@@ -22,7 +22,7 @@ class Property extends Entity<IPropertyProps> {
     super(props, id, slug);
   }
 
-  public static createProperty(
+  public static create(
     props: IPropertyProps,
     id?: UniqueEntityId,
     slug?: Slug,
