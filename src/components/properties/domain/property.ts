@@ -3,16 +3,17 @@ import { UniqueEntityId } from "@domain/uniqueEntityId";
 import { Slug } from "@domain/slug";
 import { Guard, IGuardResult } from "@utils/guard";
 import { Result } from "@utils/result";
+import { Name } from "@components/properties/domain/name";
 
 interface IPropertyProps {
-  name: string;
+  name: Name;
 }
 
 /**
  * Convenience class for product properties that just have an id, slug, and name.
  */
 class Property extends Entity<IPropertyProps> {
-  get name(): string {
+  get name(): Name {
     return this.props.name;
   }
 
@@ -33,11 +34,6 @@ class Property extends Entity<IPropertyProps> {
 
     if (!propertyPropsCheck.succeeded) {
       return Result.fail<Property>(propertyPropsCheck.message as string);
-    }
-    if (props.name.length >= 256) {
-      return Result.fail<Property>(
-        "Property name must be less than 256 characters.",
-      );
     }
 
     return Result.ok<Property>(new Property(props, id, slug));
