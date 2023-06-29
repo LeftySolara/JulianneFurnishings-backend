@@ -16,6 +16,7 @@ abstract class BaseController {
     const validationError = validateRequestInputs(req);
     if (validationError) {
       BaseController.jsonResponse(res, 422, validationError.message);
+      return;
     }
 
     this.req = req;

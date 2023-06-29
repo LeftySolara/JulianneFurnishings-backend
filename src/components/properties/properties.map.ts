@@ -40,7 +40,7 @@ class PropertyMap {
       throw new Error(nameResult.errorValue.toString());
     }
 
-    const createPropertyResult = Property.createProperty(
+    const createPropertyResult = Property.create(
       {
         name: nameResult.getValue(),
       },

@@ -4,6 +4,7 @@ import { pinoHttp } from "pino-http";
 import { appConfig } from "@utils/appConfig";
 import logger from "@utils/logger";
 import { usersRouter } from "@components/users/users.routes";
+import { categoriesRouter } from "@components/categories/categories.routes";
 
 const loadExpress = async ({ app }: { app: Application }) => {
   app.use(bodyParser.json());
@@ -27,6 +28,7 @@ const loadExpress = async ({ app }: { app: Application }) => {
   });
 
   app.use("/users", usersRouter);
+  app.use("/categories", categoriesRouter);
 };
 
 export default loadExpress;
