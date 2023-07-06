@@ -5,6 +5,7 @@ import { appConfig } from "@utils/appConfig";
 import logger from "@utils/logger";
 import { usersRouter } from "@components/users/users.routes";
 import { categoriesRouter } from "@components/categories/categories.routes";
+import { subcategoriesRouter } from "@components/subcategories/subcategories.routes";
 
 const loadExpress = async ({ app }: { app: Application }) => {
   app.use(bodyParser.json());
@@ -29,6 +30,7 @@ const loadExpress = async ({ app }: { app: Application }) => {
 
   app.use("/users", usersRouter);
   app.use("/categories", categoriesRouter);
+  app.use("/subcategories", subcategoriesRouter);
 };
 
 export default loadExpress;
