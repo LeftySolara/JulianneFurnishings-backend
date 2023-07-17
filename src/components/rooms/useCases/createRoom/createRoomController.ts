@@ -1,7 +1,7 @@
 import { BaseController } from "@infra/http/baseController";
-import { CreateRoomUseCase } from "@components/rooms/useCases/createRoomUseCase";
+import { CreateRoomUseCase } from "@components/rooms/useCases/createRoom/createRoomUseCase";
 import { RoomDTO, CreateRoomDTO } from "@components/rooms/domain/roomDTO";
-import { CreateRoomErrors } from "@components/rooms/useCases/createRoomErrors";
+import { CreateRoomErrors } from "@components/rooms/useCases/createRoom/createRoomErrors";
 
 class CreateRoomController extends BaseController {
   private useCase: CreateRoomUseCase;

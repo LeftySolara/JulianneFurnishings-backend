@@ -5,7 +5,7 @@ import { Name } from "@components/properties/domain/name";
 import { Room } from "@components/rooms/domain/room";
 import { CreateRoomDTO, RoomDTO } from "@components/rooms/domain/roomDTO";
 import { RoomMap } from "@components/rooms/rooms.map";
-import { CreateRoomErrors } from "@components/rooms/useCases/createRoomErrors";
+import { CreateRoomErrors } from "@components/rooms/useCases/createRoom/createRoomErrors";
 
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/indent */
 type Response = Either<
